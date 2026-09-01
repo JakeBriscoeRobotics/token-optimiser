@@ -1,6 +1,21 @@
 SET userInput AS STRING
 
 //This must work with tokens (Full word per token for Word2Vec) so we have to split the raw input into tokens
-FUNCTION TOKENISE(rawText, )
+//This must also include unknowns to handle misspellings or rare words so UNK has been included
 
+FUNCTION RAW_TOKENISE_WORD2VEC(rawText AS STRING, vocabDict AS DICT, unkID AS INTEGER)
+  //Approach: Split text into individual whole words, cross reference look up table for coordinates, and average into one final vector
+
+  SET lowerCaseText AS LOWERCASE(rawText)
+  SET splittedLowerCase AS LIST
+  splittedLowerCase = SPLIT(lowerCaseText)
+  tokenIDs = LIST(EMPTY)
+
+  FOR EACH word IN words DO
+        IF word IN vocabDict THEN
+            APPEND vocabDict[word] TO tokenIDs
+        ELSE
+            APPEND unkID TO tokenIDs
+        ENDIF
+    ENDFOR
 ENDFUNCTION

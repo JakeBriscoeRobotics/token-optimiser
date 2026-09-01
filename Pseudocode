@@ -21,3 +21,5 @@ FUNCTION RAW_TOKENISE_WORD2VEC(rawText AS STRING, vocabDict AS DICT, unkID AS IN
 
 	RETURN TokenIDs
 ENDFUNCTION
+
+//Plan: Get ibto matrix, take special average into one vector, perform vector

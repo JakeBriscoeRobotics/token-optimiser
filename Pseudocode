@@ -1,6 +1,6 @@
-SET UserInput AS STRING
+SET userInput AS STRING
 
-
-FUNCTION TOKENISE(Input)
+//This must work with tokens (Full word per token for Word2Vec) so we have to split the raw input into tokens
+FUNCTION TOKENISE(rawText, )
 
 ENDFUNCTION

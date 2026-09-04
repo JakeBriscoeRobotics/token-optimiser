@@ -4,23 +4,29 @@ SET userInput AS STRING
 //This must also include unknowns to handle misspellings or rare words so UNK has been included
 
 FUNCTION RAW_TOKENISE_WORD2VEC(rawText AS STRING, vocabDict AS DICT, unkID AS INTEGER)
-  //Approach: Split text into individual whole words, cross reference look up table for coordinates, and average into one final vector
+	//Approach: Split text into individual whole words, cross reference look up table for coordinates, and average into one final vector
 
-  SET lowerCaseText AS LOWERCASE(rawText)
-  SET splittedLowerCase AS LIST
-  splittedLowerCase = SPLIT(lowerCaseText)
-  tokenIDs = LIST(EMPTY)
+	SET lowerCaseText AS LOWERCASE(rawText)
+	SET splittedLowerCase AS LIST
 
-  FOR EACH word IN words DO
-        IF word IN vocabDict THEN
-            APPEND vocabDict[word] TO tokenIDs
-        ELSE
-            APPEND unkID TO tokenIDs
+	splittedLowerCase = SPLIT(lowerCaseText)
+	tokenIDs = LIST(EMPTY)
+
+	FOR i FROM 0 TO (LENGTH(words) - 1) DO
+		SET currentWord = words[index]
+        SET assignedID = unkID
+
+        IF currentWord IN vocabDict THEN
+            assignedID = vocabDict[currentWord]
         ENDIF
-    ENDFOR
 
-	RETURN TokenIDs
-ENDFUNCTION
+		//Contains String, math pointer for TextRank, index for sentence order preservation
+        SET tokenObj = CREATE Token(
+            word = currentWord,
+            id = assignedID,
+            originalIndex = index
+        )
+
 
 FUNCTION GENERATE_MEANING_VECTOR(tokenIDs AS LIST OF INTEGER
 

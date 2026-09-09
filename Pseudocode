@@ -30,7 +30,28 @@ ENDFUNCTION
 
 
 //For surprisal table, use Rust crate wordfreq-model
-FUNCTION SURPRISAL( 
+FUNCTION SURPRISAL(tokenList AS LIST, probTable as DICT, defaultProb as FLOAT) 
+	//Use shannon surprisal formula S(w) = -log2(P(w))
+
+	SET surprisalScores AS LIST(EMPTY)
+
+	FOR EACH tokenObj IN tokenList DO
+		SET word = tokenObj.word
+		SET prob = defaultProb //As baseline to increase if greater to prevent log(0) error
+
+		IF word IN probTable THEN
+			prob = probTable[word]
+		END IF
+
+		IF prob <=0 THEN
+			prob = defaultProb
+		ENDIF
+
+		SET score = -1.0 * LOG2(prob)
+		APPEND score TO surprisalScores
+	ENDFOR
+
+	RETURN surprisalScores AS LIST OF FLOAT
 
 ENDFUNCTION
 

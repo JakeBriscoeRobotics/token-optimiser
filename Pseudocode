@@ -55,6 +55,24 @@ FUNCTION SURPRISAL(tokenList AS LIST, probTable as DICT, defaultProb as FLOAT)
 
 ENDFUNCTION
 
+FUNCTION PRUNE_SURPRISAL(tokenList AS LIST, surprisalScores AS LIST, surprisalThreshold AS FLOAT, protectedSet AS SET)
+
+	FOR i FROM 0 TO (LENGTH(tokenList)-1) DO
+		SET tokenObj =tokenList[i]
+		SET score = surprisalScores[i]
+	
+		IF tokenObj.word IN protectedSET THEN
+			APPEND tokenObj TO survivingTokens
+			CONTINUE //To avoid checks below
+		ENDIF
+	
+		IF score >= surprisalThreshold THEN
+			APPEND tokenObj TO survivingTokens
+		END IF
+	ENDFOR
+
+	RETURN survivedTokens AS LIST
+ENDFUNCTION
 FUNCTION GENERATE_MEANING_VECTOR(tokenIDs AS LIST OF INTEGER
 
 //Plan: Get ibto matrix, take special average into one vector, perform vector

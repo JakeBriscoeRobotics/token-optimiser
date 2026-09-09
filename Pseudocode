@@ -122,3 +122,18 @@ FUNCTION COSINE_SIMILARITY(vectorA AS LIST OF FLOAT, vectorB AS LIST OF FLOAT, v
 	RETURN dotProduct / (magnitudeA * magnitudeB) AS FLOAT
 ENDFUNCTION
 
+
+Plaintext
+
+
+FUNCTION TO_FINAL_PROMPT_STRING(tokens AS LIST OF Token) RETURNS STRING
+    // Ensure word sequence matches the user's original sentence order
+    SORT_BY_PROPERTY(tokens, "originalIndex", ASCENDING)
+
+    SET finalWords = LIST(EMPTY)
+    FOR EACH t IN tokens DO
+        APPEND t.word TO finalWords
+    ENDFOR
+
+    RETURN JOIN(finalWords, " ")
+END FUNCTION

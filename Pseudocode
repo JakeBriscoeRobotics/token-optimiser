@@ -73,3 +73,52 @@ FUNCTION PRUNE_SURPRISAL(tokenList AS LIST, surprisalScores AS LIST, surprisalTh
 
 	RETURN survivedTokens AS LIST
 ENDFUNCTION
+
+//Find centroid so that inputs are comparable for cosine similarity testing
+
+FUNCTION COMPUTE_CENTROID(tokenList AS LIST, embeddingTABLE as Matrix, vectorDim AS INTEGER) 
+
+	SET centroid = CREATE_ARRAY(vectorDim, 0.0)
+	SET validTokens = 0
+
+	FOR EACH tokenObj IN tokenList DO
+		SET tokenVector = embeddingTable[tokenObj.id]
+		FOR d from 0 TO (vectorDim - 1) DO
+			centroid[d] = centroid[d] + tokenVector[d]
+		ENDFOR
+		validTokens = validTokens + 1
+	ENDFOR
+
+	//Divide by total count to get average coordinate
+	IF validTokens > 0 THEN
+		FOR d FROM 0 TO (vectorDim - 1) DO
+			centroid[d] = centroid[d] / validTokens
+		ENDFOR
+	ENDIF
+
+	RETURN centroid AS LIST OF FLOATS
+ENDFUNCTION
+
+FUNCTION COSINE_SIMILARITY(vectorA AS LIST OF FLOAT, vectorB AS LIST OF FLOAT, vectorDim AS INTEGER)
+
+	SET dotProduct = 0.0
+	SET normA = 0.0
+	SET normB = 0.0
+
+	FOR d FROM 0 TO (vectorDim - 1) DO
+		dotProduct = dotProduct + (vectorA[d] * vectorB[d])
+		normA = normA + (vectorA[d] * vectorA[d])
+		normB = normB + (vectorB[d] * vectorB[d])
+	ENDFOR
+
+	SET magnitudeA = SQRT(normA)
+	SET magnitudeB = SQRT(normB)
+
+	//Prevent divide by zero error
+	IF magnitudeA == 0.0 OR magnitude B == 0.0 THEN
+		RETURN 0.0
+	END IF
+
+	RETURN dotProduct / (magnitudeA * magnitudeB) AS FLOAT
+ENDFUNCTION
+

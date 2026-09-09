@@ -73,7 +73,3 @@ FUNCTION PRUNE_SURPRISAL(tokenList AS LIST, surprisalScores AS LIST, surprisalTh
 
 	RETURN survivedTokens AS LIST
 ENDFUNCTION
-FUNCTION GENERATE_MEANING_VECTOR(tokenIDs AS LIST OF INTEGER
-
-//Plan: Get ibto matrix, take special average into one vector, perform vector
-ENDFUNCTION

@@ -13,7 +13,7 @@ Write High Level Language Approach including mathematical algorithm, and then wr
 
 **09/10/2026**
 
-I moved the algorithm prototype into shortening AI output and included the telemetry on a user interface.
+I moved the algorithm prototype into shortening AI output and included the telemetry on a user interface. This is proof of concept of AI token savings of 20%.
 
 <img width="1883" height="752" alt="TokenOpPanel" src="https://github.com/user-attachments/assets/4652043f-b3a6-479e-80af-58114fd12116" />
 

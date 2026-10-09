@@ -4,10 +4,10 @@ Author: Jake Briscoe
 Note: Code private due to intent to commercialise, see updates
 
 **Objective**
-The objective of this project is to compress user prompts into AI by extracting the meaning and rewriting it with less tokens 
+The objective of this project is to compress outputs of LLM to save SaaS service startups money from tokens. This aims to be compatible with OpenAI and Anthropic
 
 **Plan** 
-Write High Level Language Approach, and then write it formally into pseudocode. Once pseudocode is verified, I will write the program in Rust as it is the fastest.
+Write High Level Language Approach including mathematical algorithm, and then write it formally into pseudocode. Once pseudocode is verified create a python code and user interface for a minimum viable product.
 
 **Updates**
 
